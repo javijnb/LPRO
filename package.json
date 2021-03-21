@@ -1,0 +1,27 @@
+{
+  "name": "nodemqtt",
+  "version": "1.0.0",
+  "description": "Broker MQTT en servidor Node",
+  "main": "broker.js",
+  "scripts": {
+    "broker": "npm broker",
+    "start_pub": "npm publisher",
+    "start_subs": "npm subscriber"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mosca": "^2.8.3",
+    "mqtt": "^4.2.6",
+    "nodemon": "^2.0.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javijnb/NodeMQTT.git"
+  },
+  "author": "Javijnb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/javijnb/NodeMQTT/issues"
+  },
+  "homepage": "https://github.com/javijnb/NodeMQTT#readme"
+}
