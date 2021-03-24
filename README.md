@@ -1,7 +1,13 @@
 # NodeMQTT
-**COMANDOS**
-> Iniciar broker persistente: nodemon broker
+
+## COMANDOS
+Iniciar broker persistente: 
+> nodemon broker
+
+Enviar mensajes de prueba al broker:
+> mosquitto_pub -d -h localhost -p 1883 -t "LUADA/gateway1/Lobo2/RSSI" -m "11"
+> mosquitto_pub -d -P "gafas1442" -u "Javi" -t "LUADA/gateway1/Lobo2/RSSI" -m "22"
 
 
-**NOTAS**
-Actualmente no se usan los archivos publisher ni subscriber. Se eliminarán posteriormente
+## NOTAS
+Eliminar *publisher.js* y *subscriber.js*, no se usan
