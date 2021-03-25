@@ -81,7 +81,7 @@ function after_publish()
 function mqtt_messsageReceived(topic, message, packet)
 {
     var datetime = new Date();
-    console.log("--------------------------------------------------------------");
+    console.log("--------------------------------------------------------------------------------------");
     console.log('Topic: ' +  topic);
     console.log('Mensaje recibido: ' + message);
     console.log("Timestamp: "+datetime)
