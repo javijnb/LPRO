@@ -15,4 +15,7 @@ Enviar mensajes de prueba al broker:
 
 
 ## NOTAS
-Eliminar *publisher.js* y *subscriber.js*, no se usan
+
+Puertos abiertos:
+83.55.97.99:1883 - Comunicación con el broker MQTT Mosquitto
+83.55.97.99:9000 - Servidor página principal
