@@ -1,12 +1,54 @@
 //TIMESTAMPS
 let date_ob = new Date();
 
+// IMPORTS:
+const express = require('express');
+const path = require("path");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const passport = require("passport");
 
-//EXPRESS
-var express = require('express');
+
+
+
+// MONGO:
+const mongoose = require("mongoose");
+const config = require("./config/database");
+
+mongoose.connect(config.database);
+
+mongoose.connection.on("connected", ()=>{
+    console.log("Connected to database "+config.database);
+});
+
+mongoose.connection.on("error", (error)=>{
+    console.log("Database error "+error);
+});
+
+
+// MONGODB
+var url = "mongodb://localhost:27017/";
+var urlCol = "mongodb://127.0.0.1/LUADA";
+var MongoClient = require("mongodb").MongoClient;
+
+
+
+
+// EXPRESS
 const app = express();
-const port = process.env.PORT || 9000;
-app.use(express.static("public"));
+const users = require("./routes/users");
+const port = 9000;
+
+app.use(cors()); //CORS Middleware
+app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.json());
+
+app.use(passport.initialize());
+app.use(passport.session());
+require("./config/passport")(passport);
+
+app.use("/users", users); //Redirigir las rutas que sean /investigadores/XXXXX
+
 app.listen(port,()=>{
     console.log("Servidor Node.js con broker MQTT en puerto "+port);
 });
@@ -15,20 +57,8 @@ app.listen(port,()=>{
 
 
 
-// MONGODB
-//var mongoose =  require("mongoose");
-//var mongoDB = 'mongodb://127.0.0.1/LUADA';
-//mongoose.connect(mongoDB);
-var url = "mongodb://localhost:27017/";
-var urlCol = "mongodb://127.0.0.1/LUADA";
-var MongoClient = require("mongodb").MongoClient;
-
-
-
-
 app.get("/Gateways", function(req, res){
 
-    //res.send("Has llegado a Gateways");
     MongoClient.connect(urlCol, function(err, db){
         if(err){
             throw err;
@@ -37,7 +67,7 @@ app.get("/Gateways", function(req, res){
             if(err){
                 throw err;
             }
-            console.log(result);
+            //console.log(result);
             res.send(result);
         });
     });
@@ -51,8 +81,9 @@ app.get("/Gateways", function(req, res){
 
 // MQTT
 var mqtt = require('mqtt');
+const { use } = require('passport');
 var Topic = 'LUADA/#'; //subscribe to all topics
-var Broker_URL = 'mqtt://192.168.1.42';
+var Broker_URL = 'mqtt://192.168.1.45';
 
 var options = {
 	clientId: 'MiBrokerMosquitto',
