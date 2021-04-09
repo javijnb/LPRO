@@ -47,16 +47,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 require("./config/passport")(passport);
 
-app.use("/users", users); //Redirigir las rutas que sean /investigadores/XXXXX
+app.use("/users", users); //Redirigir las rutas que sean /users/XXXXX
 
 app.listen(port,()=>{
-    console.log("Servidor Node.js con broker MQTT en puerto "+port);
+    console.log("Servidor Node.js conectado a TTN en el puerto "+port);
 });
 
 
 
-
-
+// Mostrar en /Gateways todo el contenido de la colección Gateways
 app.get("/Gateways", function(req, res){
 
     MongoClient.connect(urlCol, function(err, db){
@@ -76,10 +75,71 @@ app.get("/Gateways", function(req, res){
 
 
 
+// THE THINGS NETWORK:
+var ttn = require("ttn");
+
+var appID = "luada"
+var accessKey = "ttn-account-v2.cAxLgW1eWixWn9NHxaVRI34yQBGMTNqMNj1VbpOA7Kg"
+console.log("Accediendo a la aplicación LUADA de The Things Network...")
+
+ttn.data(appID, accessKey).then(function (client) {
+
+        client.on("uplink", function (devID, payload) {
+
+            console.log("*******************************");
+            console.log(JSON.stringify(payload, null, 4));
+            console.log("*******************************");
+
+            //PARSEO DE DATOS
+
+            const ParsedPayload = JSON.parse(payload);
+
+            var gatewayID  = ParsedPayload.metadata.gateways[0].gtw_id;
+            var animalID   = devID;
+            var timeMetadata = ParsedPayload.metadata.time;
+            var timeGateways = ParsedPayload.metadata.gateways[0].time;
+            var RSSI     = ParsedPayload.metadata.gateways[0].rssi;
+            var latitud  = ParsedPayload.metadata.latitude;
+            var longitud = ParsedPayload.metadata.longitude;
+
+            
+
+            
+            console.log("PayloadRaw => ", ParsedPayload.payload_raw);
+            console.log("AnimalID   => ", devID);
+            console.log("Timestamp en metadata (gateway?) => ", timeMetadata);
+            console.log("GatewayID  => ", gatewayID);
+            console.log("Timestamp en gateways (collar?)  => ", timeGateways);
+            console.log("RSSI (dBm) => ", RSSI);
+            console.log("Latitud    => ", latitud);
+            console.log("Longitudd  => ", longitud);
+
+            
+
+            //GUARDADO DE DATOS EN BD
+            var objeto = {"gatewayID": gatewayID, "AnimalID": animalID, "RSSI" : RSSI, "latitud": latitud, "longitud": longitud, "timestamp_sensor": timeGateways, "timestamp_gateway": timeMetadata};
+    
+            MongoClient.connect(url, function(err, db) {
+                if (err) throw err;
+                var dbo = db.db("LUADA");
+                dbo.collection("Gateways").insertOne(objeto, function(err, res) {
+                  if (err) throw err;
+                  console.log("--- Nuevo objeto añadido a Gateways ---");
+                  db.close();
+                });
+            });
+
+        });
+
+    })
+    .catch(function (error) {
+        console.error("Error", error)
+        process.exit(1)
+    })
 
 
 
-// MQTT
+/* MQTT
 var mqtt = require('mqtt');
 const { use } = require('passport');
 var Topic = 'LUADA/#'; //subscribe to all topics
@@ -165,3 +225,4 @@ function mqtt_messsageReceived(topic, message, packet){
 function mqtt_close(){
 	console.log("Cerrando conexión MQTT");
 }
+*/

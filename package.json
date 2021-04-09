@@ -19,7 +19,8 @@
     "mqtt": "^4.2.6",
     "nodemon": "^2.0.7",
     "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "ttn": "^2.3.3"
   },
   "repository": {
     "type": "git",
