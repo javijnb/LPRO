@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.css"/>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <meta name="theme-color" content="#7952b3">
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">LUADA</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">Pechar sesión</a>
+            </li>
+        </ul>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <h6
+                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Panel de monitorización</span>
+                        <a class="link-secondary" href="#" aria-label="Add a new report">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file"></span>
+                                Gateways
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="shopping-cart"></span>
+                                Animais
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="users"></span>
+                                Contacto cos desarrolladores
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="bar-chart-2"></span>
+                                Información
+                            </a>
+                        </li>
+                    </ul>
+
+                    <h6
+                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Rexistros (sen usar)</span>
+                        <a class="link-secondary" href="#" aria-label="Add a new report">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Hoxe
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Últimos 3 días
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Última semana
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Tódolos rexistros
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Panel de monitorización</h1>
+                </div>
+
+                <app-mapa></app-mapa>
+
+                <h2>Información capturada</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Intre de chegada</th>
+                                <th>ID do animal</th>
+                                <th>ID do gateway</th>
+                                <th>RSSI (dBm)</th>
+                                <th>Latitude</th>
+                                <th>Lonxitude</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2021-04-09T20:49:15.954193Z</td>
+                                <td>luada_lobo0001</td>
+                                <td>eui-3436323821006f00</td>
+                                <td>-111</td>
+                                <td>42.221138</td>
+                                <td>-8.735002</td>
+                            </tr>
+                            <tr>
+                                <td>2021-04-09T20:49:15.954193Z</td>
+                                <td>luada_lobo0001</td>
+                                <td>eui-3436323821006f00</td>
+                                <td>-111</td>
+                                <td>42.221138</td>
+                                <td>-8.735002</td>
+                            </tr>
+                            <tr>
+                                <td>2021-04-09T20:49:15.954193Z</td>
+                                <td>luada_lobo0001</td>
+                                <td>eui-3436323821006f00</td>
+                                <td>-111</td>
+                                <td>42.221138</td>
+                                <td>-8.735002</td>
+                            </tr>
+                            <tr>
+                                <td>2021-04-09T20:49:15.954193Z</td>
+                                <td>luada_lobo0001</td>
+                                <td>eui-3436323821006f00</td>
+                                <td>-111</td>
+                                <td>42.221138</td>
+                                <td>-8.735002</td>
+                            </tr>
+                            <tr>
+                                <td>2021-04-09T20:49:15.954193Z</td>
+                                <td>luada_lobo0001</td>
+                                <td>eui-3436323821006f00</td>
+                                <td>-111</td>
+                                <td>42.221138</td>
+                                <td>-8.735002</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+        integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+        crossorigin="anonymous"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
