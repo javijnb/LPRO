@@ -86,26 +86,26 @@ ttn.data(appID, accessKey).then(function (client) {
 
         client.on("uplink", function (devID, payload) {
 
+            /*
             console.log("*******************************");
             console.log(JSON.stringify(payload, null, 4));
             console.log("*******************************");
+            */
 
             //PARSEO DE DATOS
 
-            const ParsedPayload = JSON.parse(payload);
-
-            var gatewayID  = ParsedPayload.metadata.gateways[0].gtw_id;
+            var gatewayID  = payload.metadata.gateways[0].gtw_id;
             var animalID   = devID;
-            var timeMetadata = ParsedPayload.metadata.time;
-            var timeGateways = ParsedPayload.metadata.gateways[0].time;
-            var RSSI     = ParsedPayload.metadata.gateways[0].rssi;
-            var latitud  = ParsedPayload.metadata.latitude;
-            var longitud = ParsedPayload.metadata.longitude;
+            var timeMetadata = payload.metadata.time;
+            var timeGateways = payload.metadata.gateways[0].time;
+            var RSSI     = payload.metadata.gateways[0].rssi;
+            var latitud  = payload.metadata.latitude;
+            var longitud = payload.metadata.longitude;
 
             
 
             
-            console.log("PayloadRaw => ", ParsedPayload.payload_raw);
+            console.log("PayloadRaw => ", payload.payload_raw);
             console.log("AnimalID   => ", devID);
             console.log("Timestamp en metadata (gateway?) => ", timeMetadata);
             console.log("GatewayID  => ", gatewayID);
@@ -132,6 +132,7 @@ ttn.data(appID, accessKey).then(function (client) {
         });
 
     })
+    
     .catch(function (error) {
         console.error("Error", error)
         process.exit(1)
