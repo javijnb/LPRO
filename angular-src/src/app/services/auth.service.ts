@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+//import { tokenNotExpired } from 'angular2-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,12 @@ export class AuthService {
     this.user = null;
     localStorage.clear();
   }
+
+  /*
+  loggedIn(){
+    return tokenNotExpired();
+  }
+  */
 
 
 }
