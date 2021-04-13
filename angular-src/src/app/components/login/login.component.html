@@ -1,1 +1,36 @@
-<p>Pagina de login</p>
+<link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.css">
+
+<!--DESCOMENTAR PARA TENER LA IMAGEN DE FONDO-->
+<!--<div class="bg-div" style="background-image: url(assets/lobo.jpg)">-->
+
+<h2 class="page-header text-md-center">Iniciar Sesión</h2>
+<form (submit)="onLoginSubmit()">
+
+    <!--
+    <div class="form-group">
+        <div class="text-md-center">Nome de usuario</div>
+        <input type="text" class="form-control" [(ngModel)]="username" name="username">
+    </div>
+    -->
+
+    <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-lg">Nome de usuario</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="username" name="username">
+    </div>
+
+    <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-lg">Contrasinal</span>
+        </div>
+        <input type="password" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="password" name="password">
+    </div>
+
+    <!--CAMBIAR DESPUES EL ROUTER LINK DEL SUBMIT-->
+    <div class="text-md-center">
+        <input type="submit" class="btn btn-primary" value="Login">
+    </div>
+</form>
+
+<!--</div>-->
