@@ -4,6 +4,7 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const config = require("../config/database");
 const User = require("../models/user");
+const Gateway = require("../models/gateway");
 
 
 
@@ -60,5 +61,27 @@ router.post("/authenticate", (req, res, next)=> {
         });
     });
 });
+
+
+router.post("/listarGateways",(req,res,next)=>{
+
+    Gateway.getAllGateways((err,gateway)=>{
+
+        if(err){
+            res.json({
+                success: false,
+                msg:"Error al obtener la info de los gateways",
+            });
+        }else{
+            res.json({
+                success: "Exito recuperando todos los gateways",
+                msg: gateway,
+            });
+        }
+    })
+});
+
+
+
 
 module.exports = router;

@@ -27,10 +27,12 @@
         <input type="password" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="password" name="password">
     </div>
 
-    <!--CAMBIAR DESPUES EL ROUTER LINK DEL SUBMIT-->
-    <div class="text-md-center">
-        <input type="submit" class="btn btn-primary" value="Login">
+    
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="submit" class="btn btn-secondary">Login</button>
+        <button type="button" class="btn btn-secondary" [routerLink]="['']">Atrás</button>
     </div>
+
 </form>
 
 <!--</div>-->

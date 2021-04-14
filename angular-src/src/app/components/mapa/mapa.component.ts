@@ -17,7 +17,7 @@ export class MapaComponent implements OnInit {
     this.lat = 42.221138;
     this.lng = -8.735002;
     this.zoom = 12;
-    this.mapTypeId = "hybrid";
+    this.mapTypeId = "terrain";
     
   }
 

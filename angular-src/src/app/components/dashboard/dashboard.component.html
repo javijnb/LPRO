@@ -152,6 +152,17 @@
                             </tr>
                         </thead>
                         <tbody>
+
+                            <tr *ngFor="let item of timestamp, index as i">
+                                <td>{{ timestamp[i] }}</td>
+                                <td>{{ AnimalID[i] }}</td>
+                                <td>{{ gatewayID[i] }}</td>
+                                <td>{{ RSSI[i] }}</td>
+                                <td>{{ latitud[i] }}</td>
+                                <td>{{ longitud[i] }}</td>
+                            </tr>
+
+                           <!-- 
                             <tr>
                                 <td>2021-04-09T20:49:15.954193Z</td>
                                 <td>luada_lobo0001</td>
@@ -192,6 +203,7 @@
                                 <td>42.221138</td>
                                 <td>-8.735002</td>
                             </tr>
+                            -->
                         </tbody>
                     </table>
                 </div>
