@@ -16,9 +16,9 @@ Ver si el broker está escuchando:
 
 Enviar mensajes de prueba al broker:
 
-> mosquitto_pub -d -h localhost -p 1883 -t "LUADA/gateway1/Lobo2/RSSI" -m "11"
+> mosquitto_pub -d -h localhost -p 1883 -t "LUADA/gateway1/Lobo2/RSSI" -m "-110"
 
-## REGISTRO USUARIOS
+## SI QUEREMOS REGISTRAR USUARIOS
 
 Abrir Postman y ejecutar la siguiente solicitud:
 
@@ -35,7 +35,7 @@ Y el siguiente objeto JSON:
 }
 ```
 
-## AUTENTICACIÓN DE USUARIOS
+## COMPROBAR LA AUTENTICACIÓN DE USUARIOS
 
 Con Postman creamos la siguiente solicitud:
 
@@ -50,8 +50,14 @@ Y el siguiente objeto JSON:
 }
 ```
 
+## INICIAR LA APLICACIÓN FRONTEND
+
+> cd angular-src/
+> ng serve
+
 ## NOTAS
 
 Puertos abiertos:
 83.55.97.99:1883 - Comunicación con el broker MQTT Mosquitto
 83.55.97.99:9000 - Servidor página principal
+83.55.97.99:4200 - Frontend
