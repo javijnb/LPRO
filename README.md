@@ -52,7 +52,8 @@ Y el siguiente objeto JSON:
 
 ## INICIAR LA APLICACIÓN FRONTEND
 
-> cd angular-src/
+> cd angular-src
+
 > ng serve
 
 ## NOTAS
