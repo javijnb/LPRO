@@ -60,5 +60,7 @@ Y el siguiente objeto JSON:
 
 Puertos abiertos:
 83.55.97.99:1883 - Comunicación con el broker MQTT Mosquitto
+
 83.55.97.99:9000 - Servidor página principal
+
 83.55.97.99:4200 - Frontend
