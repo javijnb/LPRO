@@ -18,7 +18,7 @@ Enviar mensajes de prueba al broker (desde otra terminal):
 
 > mosquitto_pub -d -h localhost -p 1883 -t "LUADA/gateway1/Lobo2/RSSI" -m "-110"
 
-## REGISTRO USUARIOS
+## SI QUEREMOS REGISTRAR USUARIOS
 
 Abrir Postman y ejecutar la siguiente solicitud:
 
@@ -37,7 +37,7 @@ Y el siguiente objeto JSON:
 
 Esta operación no está disponible en frontend, sino que es una operación nativa de backend usada únicamente para dar de alta a usuarios que hayan sido autorizados por los desarrolladores.
 
-## AUTENTICACIÓN DE USUARIOS
+## COMPROBAR LA AUTENTICACIÓN DE USUARIOS
 
 Con Postman creamos la siguiente solicitud:
 
@@ -53,6 +53,12 @@ Y el siguiente objeto JSON:
 ```
 
 Esto es una forma de comprobar el correcto funcionamiento del sistema de login de la aplicación final.
+
+## INICIAR LA APLICACIÓN FRONTEND
+
+> cd angular-src
+
+> ng serve
 
 ## NOTAS
 
