@@ -1,22 +1,22 @@
 # NodeMQTT
 
-## COMANDOS
+## MOSQUITTO BROKER
 
 Iniciar broker en Linux:
 
 > mosquitto -v
 
-Iniciar broker persistente: 
+Iniciar servidor-broker: 
 
 > nodemon broker
 
-Ver si el broker está escuchando:
+Comprobar si el broker está escuchando:
 
 > sudo lsof -i -P -n | grep LISTEN
 
-Enviar mensajes de prueba al broker:
+Enviar mensajes de prueba al broker (desde otra terminal):
 
-> mosquitto_pub -d -h localhost -p 1883 -t "LUADA/gateway1/Lobo2/RSSI" -m "11"
+> mosquitto_pub -d -h localhost -p 1883 -t "LUADA/gateway1/Lobo2/RSSI" -m "-110"
 
 ## REGISTRO USUARIOS
 
@@ -35,6 +35,8 @@ Y el siguiente objeto JSON:
 }
 ```
 
+Esta operación no está disponible en frontend, sino que es una operación nativa de backend usada únicamente para dar de alta a usuarios que hayan sido autorizados por los desarrolladores.
+
 ## AUTENTICACIÓN DE USUARIOS
 
 Con Postman creamos la siguiente solicitud:
@@ -50,8 +52,14 @@ Y el siguiente objeto JSON:
 }
 ```
 
+Esto es una forma de comprobar el correcto funcionamiento del sistema de login de la aplicación final.
+
 ## NOTAS
 
 Puertos abiertos:
+
 83.55.97.99:1883 - Comunicación con el broker MQTT Mosquitto
+
 83.55.97.99:9000 - Servidor página principal
+
+83.55.97.99:9000 - Frontend
