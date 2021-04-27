@@ -65,8 +65,15 @@
                             <span data-feather="plus-circle"></span>
                         </a>
                     </h6>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" [routerLink]="['/dashboard']" (click)="updateTablas('mapa')">
+                                <span data-feather="file"></span>
+                                Mapa
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/dashboard']" (click)="updateTablas('tablas')">
                                 <span data-feather="file"></span>
                                 Gateways
                             </a>
@@ -78,13 +85,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" (click)="popupContacto()">
                                 <span data-feather="users"></span>
                                 Contacto cos desarrolladores
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" [routerLink]="['/']">
                                 <span data-feather="bar-chart-2"></span>
                                 Información
                             </a>
@@ -100,25 +107,25 @@
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link">
                                 <span data-feather="file-text"></span>
                                 Hoxe
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link">
                                 <span data-feather="file-text"></span>
                                 Últimos 3 días
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link">
                                 <span data-feather="file-text"></span>
                                 Última semana
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link">
                                 <span data-feather="file-text"></span>
                                 Tódolos rexistros
                             </a>
@@ -128,16 +135,16 @@
             </nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
+                <div *ngIf="tablas == false"
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Panel de monitorización</h1>
                 </div>
 
-                <app-mapa></app-mapa>
+                <app-mapa *ngIf="tablas == false"></app-mapa>
 
-                <br><br>
+                <br *ngIf="tablas == false"><br *ngIf="tablas == false">
 
-                
+                <br>
                 <h2>Información capturada</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-sm">
@@ -162,48 +169,6 @@
                                 <td>{{ longitud[i] }}</td>
                             </tr>
 
-                           <!-- 
-                            <tr>
-                                <td>2021-04-09T20:49:15.954193Z</td>
-                                <td>luada_lobo0001</td>
-                                <td>eui-3436323821006f00</td>
-                                <td>-111</td>
-                                <td>42.221138</td>
-                                <td>-8.735002</td>
-                            </tr>
-                            <tr>
-                                <td>2021-04-09T20:49:15.954193Z</td>
-                                <td>luada_lobo0001</td>
-                                <td>eui-3436323821006f00</td>
-                                <td>-111</td>
-                                <td>42.221138</td>
-                                <td>-8.735002</td>
-                            </tr>
-                            <tr>
-                                <td>2021-04-09T20:49:15.954193Z</td>
-                                <td>luada_lobo0001</td>
-                                <td>eui-3436323821006f00</td>
-                                <td>-111</td>
-                                <td>42.221138</td>
-                                <td>-8.735002</td>
-                            </tr>
-                            <tr>
-                                <td>2021-04-09T20:49:15.954193Z</td>
-                                <td>luada_lobo0001</td>
-                                <td>eui-3436323821006f00</td>
-                                <td>-111</td>
-                                <td>42.221138</td>
-                                <td>-8.735002</td>
-                            </tr>
-                            <tr>
-                                <td>2021-04-09T20:49:15.954193Z</td>
-                                <td>luada_lobo0001</td>
-                                <td>eui-3436323821006f00</td>
-                                <td>-111</td>
-                                <td>42.221138</td>
-                                <td>-8.735002</td>
-                            </tr>
-                            -->
                         </tbody>
                     </table>
                 </div>

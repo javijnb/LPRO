@@ -62,7 +62,7 @@ app.get("/Gateways", function(req, res){
         if(err){
             throw err;
         }
-        db.collection("Gateways").find().toArray(function(err, result){
+        db.collection("gateways").find().toArray(function(err, result){
             if(err){
                 throw err;
             }
@@ -74,7 +74,7 @@ app.get("/Gateways", function(req, res){
 });
 
 
-
+/*
 // THE THINGS NETWORK:
 var ttn = require("ttn");
 
@@ -86,11 +86,11 @@ ttn.data(appID, accessKey).then(function (client) {
 
         client.on("uplink", function (devID, payload) {
 
-            /*
+            
             console.log("*******************************");
             console.log(JSON.stringify(payload, null, 4));
             console.log("*******************************");
-            */
+            
 
             //PARSEO DE DATOS
 
@@ -138,13 +138,13 @@ ttn.data(appID, accessKey).then(function (client) {
         process.exit(1)
     })
 
+*/
 
-
-/* MQTT
+// MQTT
 var mqtt = require('mqtt');
 const { use } = require('passport');
 var Topic = 'LUADA/#'; //subscribe to all topics
-var Broker_URL = 'mqtt://192.168.1.45';
+var Broker_URL = 'mqtt://192.168.1.39';
 
 var options = {
 	clientId: 'MiBrokerMosquitto',
@@ -208,13 +208,25 @@ function mqtt_messsageReceived(topic, message, packet){
     var animalID   = String(topicSplit[2]);
     var parametro  = String(topicSplit[3]);
 
+    /////////////////////////////////////////////////////////
+    //                                                     //
+    //   AQUI HAY QUE PONER UNOS VALORES DE LONG-LAT       //
+    //       FIJOS SEGUN QUÉ GATEWAY NOS LLEGUE            //
+    //                                                     //
+    /////////////////////////////////////////////////////////
+
+    // GW1: ROTONDA: lat: 42.17242766052489, lng: -8.676862545159361,
+    // GW2: DEPORTES: lat:42.17284113386385, lng: -8.683870620349603,
+    // GW3: CITEXVI: lat: 42.16733853541521, lng: -8.682424371415232,
+    // GW3: TELECO: lat: 42.1700644489694, lng: -8.688578430207395,
+
     var objeto = {"gatewayID": gatewayID, "AnimalID": animalID, [parametro] : messString, "latitud": "42.17007", "longitud": "-8.685945", "timestamp_server": timestamp_server, "timestamp_senal": timestamp_server};
     //console.log(objeto);
     
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("LUADA");
-        dbo.collection("Gateways").insertOne(objeto, function(err, res) {
+        dbo.collection("gateways").insertOne(objeto, function(err, res) {
           if (err) throw err;
           console.log("--- A new object has been added to the database ---");
           db.close();
@@ -226,4 +238,3 @@ function mqtt_messsageReceived(topic, message, packet){
 function mqtt_close(){
 	console.log("Cerrando conexión MQTT");
 }
-*/

@@ -1,6 +1,6 @@
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeId]="mapTypeId">
-    <agm-marker [latitude]="lat" [longitude]="lng">
-        <agm-info-window>GATEWAY 1</agm-info-window>
+    <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng">    
+        <agm-info-window #infoWindow>{{ marker.label }}</agm-info-window>
     </agm-marker>
 </agm-map>
 
