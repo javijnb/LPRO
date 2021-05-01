@@ -8,7 +8,7 @@ Iniciar broker en Linux:
 
 Iniciar servidor-broker: 
 
-> nodemon broker
+> nodemon
 
 Comprobar si el broker está escuchando:
 
@@ -16,7 +16,7 @@ Comprobar si el broker está escuchando:
 
 Enviar mensajes de prueba al broker (desde otra terminal):
 
-> mosquitto_pub -d -h localhost -p 1883 -t "LUADA/gateway1/Lobo2/RSSI" -m "-110"
+> mosquitto_pub -d -h localhost -p 1883 -t "LUADA/Gateway001/LOBO001/RSSI" -m "-110"
 
 ## SI QUEREMOS REGISTRAR USUARIOS
 
@@ -67,5 +67,3 @@ Puertos abiertos:
 83.55.97.99:1883 - Comunicación con el broker MQTT Mosquitto
 
 83.55.97.99:9000 - Servidor página principal
-
-83.55.97.99:9000 - Frontend

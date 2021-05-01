@@ -26,7 +26,7 @@ export class MapaComponent implements OnInit {
         label: 'Gateway 1 (rotonda)'
     },
     {
-        lat:42.17284113386385,
+        lat: 42.17284113386385,
         lng: -8.683870620349603,
         label: 'Gateway 2 (deportes)'
     },

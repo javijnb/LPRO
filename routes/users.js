@@ -81,6 +81,42 @@ router.post("/listarGateways",(req,res,next)=>{
     })
 });
 
+router.post("/longitudGanado",(req, res, next)=>{
+    Gateway.getLongitudGanado((err,item_vaca)=>{
+
+        //console.log("item: ", item_vaca);
+
+        if(err){
+            res.json({
+                success: false,
+                msg:"Error al obtener la coordenada longitud del ganado",
+            });
+        }else{
+            res.json({
+                success: true,
+                msg: item_vaca.longitudGanado,
+            });
+        }
+    })
+});
+
+router.post("/latitudGanado",(req, res, next)=>{
+    Gateway.getLongitudGanado((err,item_vaca)=>{
+
+        if(err){
+            res.json({
+                success: false,
+                msg:"Error al obtener la coordenada latitud del ganado",
+            });
+        }else{
+            res.json({
+                success: true,
+                msg: item_vaca.latitudGanado,
+            });
+        }
+    })
+});
+
 
 
 

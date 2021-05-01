@@ -6,36 +6,49 @@ const GatewaySchema = mongoose.Schema({
 
     gatewayID: {
         type: String,
-        required: true
+        required: false
     },
     AnimalID: {
         type: String,
-        required: true
+        required: false
     },
     RSSI: {
         type: Number,
-        required: true
+        required: false
     },
     latitud: {
         type: Number,
-        required: true
+        required: false
     },
     longitud: {
         type: Number,
-        required: true
+        required: false
     },
     timestamp_sensor: {
         type: String,
-        required: true
+        required: false
     },
     timestamp_gateway: {
         type: String,
-        required: true
+        required: false
+    },
+    longitudGanado:{
+        type: Number,
+        required: false
+    },
+    latitudGanado:{
+        type: Number,
+        required: false
     }
+    
 });
 
 const Gateway =  module.exports = mongoose.model("Gateway",GatewaySchema);
 
 module.exports.getAllGateways = function(callback){
     Gateway.find({},callback);
+}
+
+module.exports.getLongitudGanado = function(callback){
+    Gateway.findOne({AnimalID: "GANDO001"}, null, {sort:{timestamp_server: -1}}, callback);
 }

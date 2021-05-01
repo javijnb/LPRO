@@ -7,6 +7,23 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const passport = require("passport");
+const {spawn} = require('child_process');
+
+
+// VARIABLES:
+var latitudGanado;
+var longitudGanado;
+
+var latGW1 = 42.17242766052489;
+var lngGW1 = -8.676862545159361;
+var latGW2 = 42.17284113386385;
+var lngGW2 = -8.683870620349603;
+var latGW3 = 42.16733853541521;
+var lngGW3 = -8.682424371415232;
+var latGW4 = 42.17006444896940;
+var lngGW4 = -8.688578430207395;
+var ficheromallado = "malla.json";
+
 
 
 
@@ -74,75 +91,81 @@ app.get("/Gateways", function(req, res){
 });
 
 
-/*
-// THE THINGS NETWORK:
-var ttn = require("ttn");
+// PYTHON
+function llamadaScript(RSSI_1, RSSI_2, RSSI_3, RSSI_4, timestamp_script){
 
-var appID = "luada"
-var accessKey = "ttn-account-v2.cAxLgW1eWixWn9NHxaVRI34yQBGMTNqMNj1VbpOA7Kg"
-console.log("Accediendo a la aplicación LUADA de The Things Network...")
+    // Cuando llega mensaje /LUADA/gateway2/LOBO001/RSSI : -56dBm
 
-ttn.data(appID, accessKey).then(function (client) {
+    // RECOGIDA DE DATOS:
+    // recibir el RSSI (-56)
+    // buscar los RSSI más recientes del gateway1, gateway3 y gateway4
+    // ya tenemos los datos
 
-        client.on("uplink", function (devID, payload) {
+    // MALLA DE PUNTOS:
+    // cargamos el fichero de malla de puntos
 
-            
-            console.log("*******************************");
-            console.log(JSON.stringify(payload, null, 4));
-            console.log("*******************************");
-            
+    // argumentos de entrada: 
+    // python3 algoritmo.py RSSI_1 RSSI_2 RSSI_3 RSSI_3 RSSI_4 ficheromallado.json latGW1 longGW1 latGW2 longGW2 latGW3 longGW3 latGW4 longGW4
 
-            //PARSEO DE DATOS
+    console.log("********************************************************");
+    console.log("Has llamado al script de python");
+    console.log("Parámetros introducidos: RSSI_1: ", RSSI_1, "/ RSSI_2: ", RSSI_2, "/ RSSI_3: ", RSSI_3, "/ RSSI_4: ", RSSI_4);
+    console.log("Fichero de mallas: ", ficheromallado);
 
-            var gatewayID  = payload.metadata.gateways[0].gtw_id;
-            var animalID   = devID;
-            var timeMetadata = payload.metadata.time;
-            var timeGateways = payload.metadata.gateways[0].time;
-            var RSSI     = payload.metadata.gateways[0].rssi;
-            var latitud  = payload.metadata.latitude;
-            var longitud = payload.metadata.longitude;
 
-            
+    var output;
+    var coordenada1;
+    var coordenada2;
 
-            
-            console.log("PayloadRaw => ", payload.payload_raw);
-            console.log("AnimalID   => ", devID);
-            console.log("Timestamp en metadata (gateway?) => ", timeMetadata);
-            console.log("GatewayID  => ", gatewayID);
-            console.log("Timestamp en gateways (collar?)  => ", timeGateways);
-            console.log("RSSI (dBm) => ", RSSI);
-            console.log("Latitud    => ", latitud);
-            console.log("Longitudd  => ", longitud);
+    const python = spawn('python3', ['algoritmo_localizacion_banner_4_parametros.py',RSSI_1, RSSI_2, RSSI_3, RSSI_4, ficheromallado, latGW1, lngGW1, latGW2, lngGW2, latGW3, lngGW3, latGW4, lngGW4]);
 
-            
+    python.stdout.on('data', function (data) {
+        output = data.toString();
+        console.log("OUTPUT: ", output);
+        
+        coordenada1 = output.substring(
+            output.lastIndexOf("[")+1, output.lastIndexOf(","));
 
-            //GUARDADO DE DATOS EN BD
-            var objeto = {"gatewayID": gatewayID, "AnimalID": animalID, "RSSI" : RSSI, "latitud": latitud, "longitud": longitud, "timestamp_sensor": timeGateways, "timestamp_gateway": timeMetadata};
-    
-            MongoClient.connect(url, function(err, db) {
-                if (err) throw err;
-                var dbo = db.db("LUADA");
-                dbo.collection("Gateways").insertOne(objeto, function(err, res) {
-                  if (err) throw err;
-                  console.log("--- Nuevo objeto añadido a Gateways ---");
-                  db.close();
-                });
+        coordenada2 = output.substring(
+            output.lastIndexOf(",")+1, output.lastIndexOf("]"));
+
+        console.log("Coordenada1: ", coordenada1);
+        console.log("Coordenada2: ", coordenada2);
+
+        var objlobo;
+        objlobo = {"timestamp_algoritmo": timestamp_script, "latitudestimada": parseFloat(coordenada1), "longitudestimada": parseFloat(coordenada2), "RSSI1": parseInt(RSSI_1), "RSSI2": parseInt(RSSI_2), "RSSI3": parseInt(RSSI_3), "RSSI4": parseInt(RSSI_4)};
+        console.log("Objeto lobo a guardar: ", objlobo);
+
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("LUADA");
+            dbo.collection("LOBO001").insertOne(objlobo, function(err, res) {
+            if (err) throw err;
+            console.log("--- Se ha añadido un nuevo lobo a la base de datos LOBO001 ---");
+            db.close();
             });
-
         });
 
-    })
-    
-    .catch(function (error) {
-        console.error("Error", error)
-        process.exit(1)
-    })
+        console.log("********************************************************");
+    });
 
-*/
+    
+    
+
+    python.on('close', (code) => {
+        console.log(`Proceso de python finalizado con código: ${code}`);
+    });
+
+    
+
+}
+
+
 
 // MQTT
 var mqtt = require('mqtt');
 const { use } = require('passport');
+const { param } = require('./routes/users');
 var Topic = 'LUADA/#'; //subscribe to all topics
 var Broker_URL = 'mqtt://192.168.1.39';
 
@@ -199,7 +222,7 @@ function mqtt_messsageReceived(topic, message, packet){
     const hours = datetime.getHours();
     const minutes = datetime.getMinutes();
     const seconds = datetime.getSeconds();
-    const timestamp_server = "" +day+ "/" +month+ "/" +year+ " " +hours+ ":" +minutes+ ":" +seconds;
+    const timestamp_server = "" +year+ "/" +month+ "/" +day+ " " +hours+ ":" +minutes+ ":" +seconds;
     console.log("Timestamp: "+timestamp_server);
 
     var messString = message.toString();
@@ -208,6 +231,8 @@ function mqtt_messsageReceived(topic, message, packet){
     var animalID   = String(topicSplit[2]);
     var parametro  = String(topicSplit[3]);
 
+    
+
     /////////////////////////////////////////////////////////
     //                                                     //
     //   AQUI HAY QUE PONER UNOS VALORES DE LONG-LAT       //
@@ -215,12 +240,142 @@ function mqtt_messsageReceived(topic, message, packet){
     //                                                     //
     /////////////////////////////////////////////////////////
 
-    // GW1: ROTONDA: lat: 42.17242766052489, lng: -8.676862545159361,
-    // GW2: DEPORTES: lat:42.17284113386385, lng: -8.683870620349603,
-    // GW3: CITEXVI: lat: 42.16733853541521, lng: -8.682424371415232,
-    // GW3: TELECO: lat: 42.1700644489694, lng: -8.688578430207395,
+    // GW1: ROTONDA:  lat: 42.17242766052489, lng: -8.676862545159361,
+    // GW2: DEPORTES: lat: 42.17284113386385,  lng: -8.683870620349603,
+    // GW3: CITEXVI:  lat: 42.16733853541521, lng: -8.682424371415232,
+    // GW4: TELECO:   lat: 42.1700644489694,  lng: -8.688578430207395,
 
-    var objeto = {"gatewayID": gatewayID, "AnimalID": animalID, [parametro] : messString, "latitud": "42.17007", "longitud": "-8.685945", "timestamp_server": timestamp_server, "timestamp_senal": timestamp_server};
+    var objeto;
+    var RSSI_script;
+    var RSSIrecienteA;
+    var RSSIrecienteB;
+    var RSSIrecienteC;
+    var gatewayA;
+    var gatewayB;
+    var gatewayC;
+
+    // Compruebo si el mensaje es del formato /LUADA/gateway2/LOBO001/RSSI
+    if(parametro=="RSSI" && animalID=="LOBO001"){
+        RSSI_script = parseInt(messString);
+
+        if(gatewayID=="Gateway001"){
+            gatewayA="Gateway002";
+            gatewayB="Gateway003";
+            gatewayC="Gateway004";
+        }else if(gatewayID=="Gateway002"){
+            gatewayA="Gateway001";
+            gatewayB="Gateway003";
+            gatewayC="Gateway004";
+        }else if(gatewayID=="Gateway003"){
+            gatewayA="Gateway001";
+            gatewayB="Gateway002";
+            gatewayC="Gateway004";
+        }else if(gatewayID=="Gateway004"){
+            gatewayA="Gateway001";
+            gatewayB="Gateway002";
+            gatewayC="Gateway003";
+        }
+
+        
+        // Buscamos valor más reciente para RSSI_A
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("LUADA");
+            dbo.collection("gateways").findOne({gatewayID: gatewayA, AnimalID: "LOBO001"}, null, {sort:{timestamp_server: -1}}, function(err, result){
+              if (err) throw err;
+              RSSIrecienteA = result.RSSI;
+              console.log("RSSI más reciente para GWA: ", RSSIrecienteA);
+              db.close();
+            });
+        });
+
+        // Buscamos valor más reciente para RSSI_B
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("LUADA");
+            dbo.collection("gateways").findOne({gatewayID: gatewayB, AnimalID: "LOBO001"}, null, {sort:{timestamp_server: -1}}, function(err, result){
+              if (err) throw err;
+              RSSIrecienteB = result.RSSI;
+              console.log("RSSI más reciente para GWB: ", RSSIrecienteB);
+              db.close();
+            });
+        });
+
+        // Buscamos valor más reciente para RSSI_C
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("LUADA");
+            dbo.collection("gateways").findOne({gatewayID: gatewayC, AnimalID: "LOBO001"}, null, {sort:{timestamp_server: -1}}, function(err, result){
+              if (err) throw err;
+              RSSIrecienteC = result.RSSI;
+              console.log("RSSI más reciente para GWC: ", RSSIrecienteC);
+              db.close();
+            });
+        });
+
+        //Nos aseguramos de que se llame correctamente al script
+        setTimeout(function(){
+            if(gatewayID=="Gateway001"){
+                llamadaScript(RSSI_script, RSSIrecienteA, RSSIrecienteB, RSSIrecienteC, timestamp_server);
+            }else if(gatewayID=="Gateway002"){
+                llamadaScript(RSSIrecienteA, RSSI_script, RSSIrecienteB, RSSIrecienteC, timestamp_server);
+            }else if(gatewayID=="Gateway003"){
+                llamadaScript(RSSIrecienteA, RSSIrecienteB, RSSI_script, RSSIrecienteC, timestamp_server);
+            }else if(gatewayID=="Gateway004"){
+                llamadaScript(RSSIrecienteA, RSSIrecienteB, RSSIrecienteC, RSSI_script, timestamp_server);
+            }
+        }, 50);
+
+        
+    }
+
+
+    // Comprobamos si es un mensaje de ganado transmitiendo sus coordenadas para parsearlas
+    if(parametro=="Coordenadas"){
+        var msgSplit = String(messString).split(",");
+        var latitudGanadoS  = String(msgSplit[0]);
+        var longitudGanadoS = String(msgSplit[1]);
+        latitudGanado = parseFloat(latitudGanadoS);
+        longitudGanado = parseFloat(longitudGanadoS);
+        
+    }
+
+    // Para cada GW ponemos sus coordenadas, y si era un mensaje de ganado, con sus respectivos campos:
+    if(gatewayID=="Gateway001"){
+
+        if(animalID=="GANDO001"){
+            objeto = {"gatewayID": gatewayID, "AnimalID": animalID, [parametro] : messString, "latitud": latGW1, "longitud": lngGW1, "timestamp_server": timestamp_server, "latitudGanado": latitudGanado, "longitudGanado": longitudGanado};
+        }else{
+            objeto = {"gatewayID": gatewayID, "AnimalID": animalID, [parametro] : messString, "latitud": latGW1, "longitud": lngGW1, "timestamp_server": timestamp_server};
+        }
+        
+    }else if(gatewayID=="Gateway002"){
+        
+        if(animalID=="GANDO001"){
+            objeto = {"gatewayID": gatewayID, "AnimalID": animalID, [parametro] : messString, "latitud": latGW2, "longitud": lngGW2, "timestamp_server": timestamp_server, "latitudGanado": latitudGanado, "longitudGanado": longitudGanado};
+        }else{
+            objeto = {"gatewayID": gatewayID, "AnimalID": animalID, [parametro] : messString, "latitud": latGW2, "longitud": lngGW2, "timestamp_server": timestamp_server};
+        }
+        
+    }else if(gatewayID=="Gateway003"){
+
+        if(animalID=="GANDO001"){
+            objeto = {"gatewayID": gatewayID, "AnimalID": animalID, [parametro] : messString, "latitud": latGW3, "longitud": lngGW3, "timestamp_server": timestamp_server, "latitudGanado": latitudGanado, "longitudGanado": longitudGanado};        
+        }else{
+            objeto = {"gatewayID": gatewayID, "AnimalID": animalID, [parametro] : messString, "latitud": latGW3, "longitud": lngGW3, "timestamp_server": timestamp_server};        
+        }
+        
+    }else if(gatewayID=="Gateway004"){
+
+        if(animalID=="GANDO001"){
+            objeto = {"gatewayID": gatewayID, "AnimalID": animalID, [parametro] : messString, "latitud": latGW4, "longitud": lngGW4, "timestamp_server": timestamp_server, "latitudGanado": latitudGanado, "longitudGanado": longitudGanado};                
+        }else{
+            objeto = {"gatewayID": gatewayID, "AnimalID": animalID, [parametro] : messString, "latitud": latGW4, "longitud": lngGW4, "timestamp_server": timestamp_server};                
+        }
+        
+    }
+
+    
     //console.log(objeto);
     
     MongoClient.connect(url, function(err, db) {
