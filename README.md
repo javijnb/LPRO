@@ -6,10 +6,6 @@ Iniciar broker en Linux:
 
 > mosquitto -v
 
-Iniciar servidor-broker: 
-
-> nodemon
-
 Comprobar si el broker está escuchando:
 
 > sudo lsof -i -P -n | grep LISTEN
@@ -54,7 +50,13 @@ Y el siguiente objeto JSON:
 
 Esto es una forma de comprobar el correcto funcionamiento del sistema de login de la aplicación final.
 
-## INICIAR LA APLICACIÓN FRONTEND
+## INICIAR SERVIDOR
+
+Backend:
+
+> nodemon
+
+Frontend:
 
 > cd angular-src
 
@@ -67,3 +69,5 @@ Puertos abiertos:
 83.55.97.99:1883 - Comunicación con el broker MQTT Mosquitto
 
 83.55.97.99:9000 - Servidor página principal
+
+https://prueba-casa-3b0fa.web.app/ - Frontend hosteado en firebase

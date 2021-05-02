@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/database");
 const User = require("../models/user");
 const Gateway = require("../models/gateway");
+const Lobo = require("../models/lobo");
 
 
 
@@ -114,6 +115,25 @@ router.post("/latitudGanado",(req, res, next)=>{
                 msg: item_vaca.latitudGanado,
             });
         }
+    })
+});
+
+router.post("/coordenadasLobo",(req, res, next)=>{
+    Lobo.getCoordenadasLobo((err,item_lobo)=>{
+
+        if(err){
+            res.json({
+                success: false,
+                msg: "Error al obtener las coordenadas de todos los lobos",
+            });
+        }else{
+            res.json({
+                success: true,
+                info: "Éxito llamando a /users/coordenadasLobo",
+                msg: item_lobo,
+            });
+        }
+
     })
 });
 

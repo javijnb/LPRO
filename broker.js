@@ -139,9 +139,9 @@ function llamadaScript(RSSI_1, RSSI_2, RSSI_3, RSSI_4, timestamp_script){
         MongoClient.connect(url, function(err, db) {
             if (err) throw err;
             var dbo = db.db("LUADA");
-            dbo.collection("LOBO001").insertOne(objlobo, function(err, res) {
+            dbo.collection("lobos").insertOne(objlobo, function(err, res) {
             if (err) throw err;
-            console.log("--- Se ha añadido un nuevo lobo a la base de datos LOBO001 ---");
+            console.log("--- Se ha añadido un nuevo lobo a la base de datos Lobos ---");
             db.close();
             });
         });

@@ -23,23 +23,23 @@ export class MapaComponent implements OnInit {
     {
         lat: 42.17242766052489,
         lng: -8.676862545159361,
-        label: 'Gateway 1 (rotonda)'
+        label: 'Gateway 1'
     },
     {
         lat: 42.17284113386385,
         lng: -8.683870620349603,
-        label: 'Gateway 2 (deportes)'
+        label: 'Gateway 2'
     },
     {
         lat: 42.16733853541521,
         lng: -8.682424371415232,
-        label: 'Gateway 3 (CITEXVI)'
+        label: 'Gateway 3'
     },
     {
         lat: 42.1700644489694,
         lng: -8.688578430207395,
-        label: 'Gateway 4 (Teleco)'
-  }
+        label: 'Gateway 4'
+    }
   ];
 
   constructor(
@@ -47,7 +47,7 @@ export class MapaComponent implements OnInit {
     private registerService: RegisterService
   ) {
 
-    //centro del mapa (Vigo centro)
+    //centro del mapa
     this.lat = 42.16783474239765;
     this.lng = -8.68245011564502;
     this.zoom = 15;

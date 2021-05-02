@@ -43,7 +43,10 @@ const GatewaySchema = mongoose.Schema({
     
 });
 
+
+
 const Gateway =  module.exports = mongoose.model("Gateway",GatewaySchema);
+
 
 module.exports.getAllGateways = function(callback){
     Gateway.find({},callback);
