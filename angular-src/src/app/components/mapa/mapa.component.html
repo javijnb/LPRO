@@ -1,6 +1,15 @@
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeId]="mapTypeId">
+
     <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng">    
-        <agm-info-window #infoWindow>{{ marker.label }}</agm-info-window>
+        <agm-info-window #infoWindow><h5>{{ marker.label }}</h5></agm-info-window>
     </agm-marker>
+
+    <agm-marker *ngFor="let marker2 of markersLobo" [latitude]="marker2.lat" [longitude]="marker2.lng">
+        <agm-info-window #infoWindow><h5>LOBO001</h5> {{ marker2.timestamp }}</agm-info-window>
+    </agm-marker>
+
+    <agm-circle *ngFor="let marker3 of markersLobo" [latitude]="marker3.lat" [longitude]="marker3.lng" [radius]="100" [fillColor]="'red'">
+    </agm-circle>
+
 </agm-map>
 

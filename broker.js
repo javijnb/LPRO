@@ -14,14 +14,22 @@ const {spawn} = require('child_process');
 var latitudGanado;
 var longitudGanado;
 
-var latGW1 = 42.17242766052489;
-var lngGW1 = -8.676862545159361;
-var latGW2 = 42.17284113386385;
-var lngGW2 = -8.683870620349603;
-var latGW3 = 42.16733853541521;
-var lngGW3 = -8.682424371415232;
-var latGW4 = 42.17006444896940;
-var lngGW4 = -8.688578430207395;
+/*
+Gateway001: 42,170026 -8,688612
+Gateway002: 42,170097 -8,688528
+Gateway003: 42,169680 -8,688384
+Gateway004: 42,169826 -8,688358
+*/
+
+var latGW1 = 42.170026;
+var lngGW1 = -8.688612;
+var latGW2 = 42.170097;
+var lngGW2 = -8.688528;
+var latGW3 = 42.169680;
+var lngGW3 = -8.688384;
+var latGW4 = 42.169826;
+var lngGW4 = -8.688358;
+
 var ficheromallado = "malla.json";
 
 
@@ -167,7 +175,7 @@ var mqtt = require('mqtt');
 const { use } = require('passport');
 const { param } = require('./routes/users');
 var Topic = 'LUADA/#'; //subscribe to all topics
-var Broker_URL = 'mqtt://192.168.1.39';
+var Broker_URL = 'mqtt://192.168.1.37';
 
 var options = {
 	clientId: 'MiBrokerMosquitto',

@@ -79,12 +79,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="shopping-cart"></span>
-                                Animais
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" (click)="popupContacto()">
                                 <span data-feather="users"></span>
                                 Contacto cos desarrolladores
@@ -100,32 +94,32 @@
 
                     <h6
                         class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Rexistros (sen usar)</span>
+                        <span>Rexistros ordeados por</span>
                         <a class="link-secondary" href="#" aria-label="Add a new report">
                             <span data-feather="plus-circle"></span>
                         </a>
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link">
+                            <a class="nav-link" (click)="updateTablas('tablas')">
                                 <span data-feather="file-text"></span>
-                                Hoxe
+                                Gateways
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">
+                            <a class="nav-link" (click)="updateTablas('tablas')">
                                 <span data-feather="file-text"></span>
-                                Últimos 3 días
+                                Animais salvaxes(facer aquí un dropdown)
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">
+                            <a class="nav-link" (click)="updateTablas('tablas')">
                                 <span data-feather="file-text"></span>
-                                Última semana
+                                Gando (facer aquí un dropdown)
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">
+                            <a class="nav-link" (click)="updateTablas('tablas')">
                                 <span data-feather="file-text"></span>
                                 Tódolos rexistros
                             </a>

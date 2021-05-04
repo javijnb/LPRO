@@ -18,29 +18,55 @@ export class MapaComponent implements OnInit {
   //Para ubicar los marcadores
   latitud:String[] = new Array();
   longitud:String[] = new Array();
+
+  //Para ubicar los marcadores de los lobos
+  latitudLobo:String[] = new Array();
+  longitudLobo:String[] = new Array();
+  latLobo: number;
+  lngLobo: number;
   
+/*
+/*
+Gateway001: 42,170026 -8,688612
+Gateway002: 42,170097 -8,688528
+Gateway003: 42,169680 -8,688384
+Gateway004: 42,169826 -8,688358
+*/
+
   markers = [
     {
-        lat: 42.17242766052489,
-        lng: -8.676862545159361,
+        lat: 42.170026,
+        lng: -8.688612,
         label: 'Gateway 1'
     },
     {
-        lat: 42.17284113386385,
-        lng: -8.683870620349603,
+        lat: 42.170097,
+        lng: -8.688528,
         label: 'Gateway 2'
     },
     {
-        lat: 42.16733853541521,
-        lng: -8.682424371415232,
+        lat: 42.169680,
+        lng: -8.688384,
         label: 'Gateway 3'
     },
     {
-        lat: 42.1700644489694,
-        lng: -8.688578430207395,
+        lat: 42.169826,
+        lng: -8.688358,
         label: 'Gateway 4'
     }
   ];
+
+  //HACER QUE ESTE ARRAY SEA DEL TIPO: {lat: number, lng: number}, y todos sus objetos dentro tengan ese formato, sin tamaño definido
+  markersLobo = [{
+    "lat": 0,
+    "lng": 0,
+    "timestamp": ""
+  },
+  {
+    "lat": 0,
+    "lng": 0,
+    "timestamp": ""
+  }];
 
   constructor(
     private router:Router,
@@ -48,10 +74,10 @@ export class MapaComponent implements OnInit {
   ) {
 
     //centro del mapa
-    this.lat = 42.16783474239765;
-    this.lng = -8.68245011564502;
-    this.zoom = 15;
-    this.mapTypeId = "terrain";
+    this.lat = 42.16973963476562;
+    this.lng = -8.688470229398263;
+    this.zoom = 19;
+    this.mapTypeId = "satellite";
 
     
     
@@ -61,6 +87,7 @@ export class MapaComponent implements OnInit {
 
     let body;
     let objetos;
+    let lobos;
     this.registerService.register(body, "http://localhost:9000/users/listarGateways").subscribe(data => {
 
       objetos = data.msg;
@@ -73,9 +100,35 @@ export class MapaComponent implements OnInit {
       
     })
 
-    console.log("Latitudes: ", this.latitud);
-    console.log("Longitudes: ", this.longitud);
+
+    this.registerService.register(body, "http://localhost:9000/users/coordenadasLobo").subscribe(data => {
+      lobos = data.msg;
+
+      console.log("LOBOS: ", lobos);
+      console.log("LOBOS lenght: ", lobos.length);
+
+      for(let j = 0; j < lobos.length; j++){
+
+        this.latitudLobo[j] = lobos[j].latitudestimada;
+        this.longitudLobo[j] = lobos[j].longitudestimada;
+
+        console.log("Item: "+j+": "+lobos[j].latitudestimada);
+        console.log("Item: "+j+": "+lobos[j].longitudestimada);
+
+        this.markersLobo[j].lat       = lobos[j].latitudestimada;
+        this.markersLobo[j].lng       = lobos[j].longitudestimada;
+        this.markersLobo[j].timestamp = lobos[j].timestamp_algoritmo;
+        
+        console.log("MarkerLobo lat:", this.markersLobo[j].lat);
+        console.log("MarkerLobo lng:", this.markersLobo[j].lng);
+          
+      }
+
+
+
+    });
 
   }
 
 }
+
