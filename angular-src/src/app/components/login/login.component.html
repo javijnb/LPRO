@@ -1,38 +1,26 @@
-<link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.css">
 
-<!--DESCOMENTAR PARA TENER LA IMAGEN DE FONDO-->
-<!--<div class="bg-div" style="background-image: url(assets/lobo.jpg)">-->
 
-<h2 class="page-header text-md-center">Iniciar Sesión</h2>
-<form (submit)="onLoginSubmit()">
 
-    <!--
-    <div class="form-group">
-        <div class="text-md-center">Nome de usuario</div>
-        <input type="text" class="form-control" [(ngModel)]="username" name="username">
-    </div>
-    -->
 
-    <div class="input-group input-group-lg">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-lg">Nome de usuario</span>
-        </div>
-        <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="username" name="username">
-    </div>
 
-    <div class="input-group input-group-lg">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-lg">Contrasinal</span>
-        </div>
-        <input type="password" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="password" name="password">
-    </div>
 
-    
-    <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="submit" class="btn btn-secondary">Login</button>
-        <button type="button" class="btn btn-secondary" [routerLink]="['']">Atrás</button>
-    </div>
 
-</form>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
-<!--</div>-->
+
+
+<div class="login-dark">
+    <form (submit)="onLoginSubmit()">
+        <h2 class="sr-only">Login Form</h2>
+        <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+
+        <div class="form-group"><input class="form-control" type="text" placeholder="Nome de usuario" [(ngModel)]="username" name="username"></div>
+        <div class="form-group"><input class="form-control" type="password" placeholder="Password" [(ngModel)]="password" name="password"></div>
+        <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Iniciar sesión</button></div>
+
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>

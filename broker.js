@@ -21,14 +21,14 @@ Gateway003: 42,169680 -8,688384
 Gateway004: 42,169826 -8,688358
 */
 
-var latGW1 = 42.170026;
-var lngGW1 = -8.688612;
-var latGW2 = 42.170097;
-var lngGW2 = -8.688528;
-var latGW3 = 42.169680;
-var lngGW3 = -8.688384;
-var latGW4 = 42.169826;
-var lngGW4 = -8.688358;
+const latGW1 = 42.170026;
+const lngGW1 = -8.688612;
+const latGW2 = 42.170097;
+const lngGW2 = -8.688528;
+const latGW3 = 42.169680;
+const lngGW3 = -8.688384;
+const latGW4 = 42.169826;
+const lngGW4 = -8.688358;
 
 var ficheromallado = "malla.json";
 
@@ -217,7 +217,7 @@ function after_publish(){
 	//Nada
 }
 
-function mqtt_messsageReceived(topic, message, packet){
+function mqtt_messsageReceived(topic, message, packet, llamadaScript){
     var datetime = new Date();
 
     console.log("--------------------------------------------------------------------------------------");

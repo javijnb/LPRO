@@ -68,6 +68,17 @@ Gateway004: 42,169826 -8,688358
     "timestamp": ""
   }];
 
+  markersLobo2 = [{
+    "lat": 42.167200048968134,
+    "lng": -8.683369646069087,
+    "timestamp": "2021/05/02 10:28:59"
+  },
+  {
+    "lat": 42.168300048968135,
+    "lng": -8.701369646069088,
+    "timestamp": "2021/05/02 11:31:53"
+  }];
+
   constructor(
     private router:Router,
     private registerService: RegisterService
