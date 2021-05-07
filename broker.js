@@ -178,7 +178,7 @@ var Topic = 'LUADA/#'; //subscribe to all topics
 var Broker_URL = 'mqtt://192.168.1.37';
 
 var options = {
-	clientId: 'MiBrokerMosquitto',
+	clientId: 'NodeMQTT',
 	port: 1883,
 	keepalive : 60
 };

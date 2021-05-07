@@ -69,13 +69,19 @@
                         <li class="nav-item">
                             <a class="nav-link" [routerLink]="['/dashboard']" (click)="updateTablas('mapa')">
                                 <span data-feather="file"></span>
-                                Mapa
+                                Mapa con marcadores
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/dashboard']" (click)="updateTablas('tablas')">
+                            <a class="nav-link">
                                 <span data-feather="file"></span>
-                                Gateways
+                                Mapa de cobertura animal
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                <span data-feather="file"></span>
+                                Mapa de calor
                             </a>
                         </li>
                         <li class="nav-item">
@@ -87,7 +93,7 @@
                         <li class="nav-item">
                             <a class="nav-link" [routerLink]="['/']">
                                 <span data-feather="bar-chart-2"></span>
-                                Información
+                                Información sobre o proxecto
                             </a>
                         </li>
                     </ul>
@@ -109,13 +115,13 @@
                         <li class="nav-item">
                             <a class="nav-link" (click)="updateTablas('tablas')">
                                 <span data-feather="file-text"></span>
-                                Animais salvaxes(facer aquí un dropdown)
+                                Animais salvaxes
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" (click)="updateTablas('tablas')">
                                 <span data-feather="file-text"></span>
-                                Gando (facer aquí un dropdown)
+                                Gando
                             </a>
                         </li>
                         <li class="nav-item">
@@ -139,11 +145,11 @@
                 <br *ngIf="tablas == false"><br *ngIf="tablas == false">
 
                 <br>
-                <h2>Información capturada</h2>
-                <div class="table-responsive">
+                <h2 *ngIf="tablas != false">Información capturada</h2>
+                <div *ngIf="tablas != false" class="table-responsive">
                     <table class="table table-striped table-sm">
                         <thead>
-                            <tr>
+                            <tr class="table-primary">
                                 <th>Intre de chegada</th>
                                 <th>ID do animal</th>
                                 <th>ID do gateway</th>

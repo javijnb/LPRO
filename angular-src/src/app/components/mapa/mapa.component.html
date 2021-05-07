@@ -4,11 +4,11 @@
         <agm-info-window #infoWindow><h5>{{ marker.label }}</h5></agm-info-window>
     </agm-marker>
 
-    <agm-marker *ngFor="let marker2 of markersLobo2" [latitude]="marker2.lat" [longitude]="marker2.lng">
+    <agm-marker *ngFor="let marker2 of markersLobo" [latitude]="marker2.lat" [longitude]="marker2.lng">
         <agm-info-window #infoWindow><h5>LOBO001</h5> {{ marker2.timestamp }}</agm-info-window>
     </agm-marker>
 
-    <agm-circle *ngFor="let marker3 of markersLobo2" [latitude]="marker3.lat" [longitude]="marker3.lng" [radius]="100" [fillColor]="'red'">
+    <agm-circle *ngFor="let marker3 of markersLobo" [latitude]="marker3.lat" [longitude]="marker3.lng" [radius]="100" [fillColor]="'red'">
     </agm-circle>
 
 </agm-map>
