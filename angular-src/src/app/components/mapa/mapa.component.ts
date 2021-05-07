@@ -57,27 +57,7 @@ Gateway004: 42,169826 -8,688358
   ];
 
   //HACER QUE ESTE ARRAY SEA DEL TIPO: {lat: number, lng: number}, y todos sus objetos dentro tengan ese formato, sin tamaño definido
-  markersLobo = [{
-    "lat": 0,
-    "lng": 0,
-    "timestamp": ""
-  },
-  {
-    "lat": 0,
-    "lng": 0,
-    "timestamp": ""
-  }];
-
-  markersLobo2 = [{
-    "lat": 0,
-    "lng": 0,
-    "timestamp": ""
-  },
-  {
-    "lat": 0,
-    "lng": 0,
-    "timestamp": ""
-  }];
+  markersLobo = [];
 
   constructor(
     private router:Router,
@@ -87,7 +67,7 @@ Gateway004: 42,169826 -8,688358
     //centro del mapa
     this.lat = 42.16973963476562;
     this.lng = -8.688470229398263;
-    this.zoom = 19;
+    this.zoom = 16;
     this.mapTypeId = "satellite";
 
     
@@ -97,27 +77,15 @@ Gateway004: 42,169826 -8,688358
   ngOnInit(): void {
 
     let body;
-    let objetos;
     let lobos;
-    this.registerService.register(body, "http://localhost:9000/users/listarGateways").subscribe(data => {
-
-      objetos = data.msg;
-
-      // Recorremos cada elemento gateway devuelto y guardamos sus campos en las variables globales
-      for (let i = 0; i < objetos.length; i++) {
-        this.latitud[i] = objetos[i].latitud;
-        this.longitud[i] = objetos[i].longitud;
-      }
-      
-    })
-
+    
 
     this.registerService.register(body, "http://localhost:9000/users/coordenadasLobo").subscribe(data => {
       lobos = data.msg;
 
-      console.log("LOBOS: ", lobos);
       console.log("LOBOS lenght: ", lobos.length);
 
+      /* PARA DEPURAR LOS DATOS RECIBIDOS DEL BACKEND (cambiar luego los markers en el HTML)
       for(let j = 0; j < lobos.length; j++){
 
         this.latitudLobo[j] = lobos[j].latitudestimada;
@@ -134,7 +102,10 @@ Gateway004: 42,169826 -8,688358
         console.log("MarkerLobo lng:", this.markersLobo[j].lng);
           
       }
+      */
 
+      this.markersLobo = lobos;
+      console.log("MarkersLobo ", this.markersLobo);
 
 
     });
