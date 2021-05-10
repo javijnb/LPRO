@@ -9,7 +9,6 @@ const cors = require("cors");
 const passport = require("passport");
 const {spawn} = require('child_process');
 
-
 // VARIABLES:
 var latitudGanado;
 var longitudGanado;
@@ -75,7 +74,7 @@ require("./config/passport")(passport);
 app.use("/users", users); //Redirigir las rutas que sean /users/XXXXX
 
 app.listen(port,()=>{
-    console.log("Servidor Node.js conectado a TTN en el puerto "+port);
+    console.log("Servidor Node.js conectado a broker MQTT en el puerto "+port);
 });
 
 
@@ -100,10 +99,10 @@ app.get("/Gateways", function(req, res){
 
 
 // PYTHON
-function llamadaScript(RSSI_1, RSSI_2, RSSI_3, RSSI_4, timestamp_script){
+
+async function llamadaScript(RSSI_1, RSSI_2, RSSI_3, RSSI_4, timestamp_script){
 
     // Cuando llega mensaje /LUADA/gateway2/LOBO001/RSSI : -56dBm
-
     // RECOGIDA DE DATOS:
     // recibir el RSSI (-56)
     // buscar los RSSI más recientes del gateway1, gateway3 y gateway4
@@ -157,14 +156,15 @@ function llamadaScript(RSSI_1, RSSI_2, RSSI_3, RSSI_4, timestamp_script){
         console.log("********************************************************");
     });
 
-    
-    
-
     python.on('close', (code) => {
         console.log(`Proceso de python finalizado con código: ${code}`);
     });
 
-    
+    return new Promise(resolve => {
+            setTimeout(() => {
+                resolve("Fin llamadaScript");
+            }, 500); 
+    });
 
 }
 
@@ -217,7 +217,7 @@ function after_publish(){
 	//Nada
 }
 
-function mqtt_messsageReceived(topic, message, packet, llamadaScript){
+async function mqtt_messsageReceived(topic, message, packet){
     var datetime = new Date();
 
     console.log("--------------------------------------------------------------------------------------");
@@ -233,9 +233,11 @@ function mqtt_messsageReceived(topic, message, packet, llamadaScript){
     const timestamp_server = "" +year+ "/" +month+ "/" +day+ " " +hours+ ":" +minutes+ ":" +seconds;
     console.log("Timestamp: "+timestamp_server);
 
+    var gatewayID = "Gateway001";
+
     var messString = message.toString();
     var topicSplit = String(topic).split("/");
-    var gatewayID  = String(topicSplit[1]);
+    gatewayID  = String(topicSplit[1]);
     var animalID   = String(topicSplit[2]);
     var parametro  = String(topicSplit[3]);
 
@@ -262,7 +264,7 @@ function mqtt_messsageReceived(topic, message, packet, llamadaScript){
     var gatewayB;
     var gatewayC;
 
-    // Compruebo si el mensaje es del formato /LUADA/gateway2/LOBO001/RSSI
+    // Compruebo si el mensaje es del formato /LUADA/Gateway00X/LOBO001/RSSI
     if(parametro=="RSSI" && animalID=="LOBO001"){
         RSSI_script = parseInt(messString);
 
@@ -322,18 +324,19 @@ function mqtt_messsageReceived(topic, message, packet, llamadaScript){
         });
 
         //Nos aseguramos de que se llame correctamente al script
+        var x;
+        
         setTimeout(function(){
-            if(gatewayID=="Gateway001"){
-                llamadaScript(RSSI_script, RSSIrecienteA, RSSIrecienteB, RSSIrecienteC, timestamp_server);
-            }else if(gatewayID=="Gateway002"){
+            if(gatewayID=="Gateway002"){
                 llamadaScript(RSSIrecienteA, RSSI_script, RSSIrecienteB, RSSIrecienteC, timestamp_server);
             }else if(gatewayID=="Gateway003"){
                 llamadaScript(RSSIrecienteA, RSSIrecienteB, RSSI_script, RSSIrecienteC, timestamp_server);
             }else if(gatewayID=="Gateway004"){
                 llamadaScript(RSSIrecienteA, RSSIrecienteB, RSSIrecienteC, RSSI_script, timestamp_server);
+            }else{
+                llamadaScript(RSSI_script, RSSIrecienteA, RSSIrecienteB, RSSIrecienteC, timestamp_server);
             }
-        }, 50);
-
+        }, 400);
         
     }
 
