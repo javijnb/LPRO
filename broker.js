@@ -233,11 +233,9 @@ async function mqtt_messsageReceived(topic, message, packet){
     const timestamp_server = "" +year+ "/" +month+ "/" +day+ " " +hours+ ":" +minutes+ ":" +seconds;
     console.log("Timestamp: "+timestamp_server);
 
-    var gatewayID = "Gateway001";
-
     var messString = message.toString();
     var topicSplit = String(topic).split("/");
-    gatewayID  = String(topicSplit[1]);
+    var gatewayID  = String(topicSplit[1]);
     var animalID   = String(topicSplit[2]);
     var parametro  = String(topicSplit[3]);
 
@@ -336,7 +334,7 @@ async function mqtt_messsageReceived(topic, message, packet){
             }else{
                 llamadaScript(RSSI_script, RSSIrecienteA, RSSIrecienteB, RSSIrecienteC, timestamp_server);
             }
-        }, 400);
+        }, 100);
         
     }
 

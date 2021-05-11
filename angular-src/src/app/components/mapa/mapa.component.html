@@ -1,3 +1,5 @@
+<button class="btn btn-danger margen" (click)="cobertura()">Amosar/Esconder cobertura de animais salvaxes</button>
+
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeId]="mapTypeId">
 
     <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng">    
@@ -11,8 +13,10 @@
         <agm-info-window #infoWindow><h5>LOBO001</h5> {{ marker2.timestamp_algoritmo }} </agm-info-window>
     </agm-marker>
 
-    <agm-circle *ngFor="let marker3 of markersLobo" [latitude]="marker3.latitudestimada" [longitude]="marker3.longitudestimada" [radius]="120" [fillColor]="'red'">
+    <ng-container *ngIf="valor_cobertura">
+    <agm-circle *ngFor="let marker3 of markersLobo" [latitude]="marker3.latitudestimada" [longitude]="marker3.longitudestimada" [radius]="120" [fillColor]="'red'" [fillOpacity]="0.08">
     </agm-circle>
+    </ng-container>
 
 </agm-map>
 

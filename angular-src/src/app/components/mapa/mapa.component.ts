@@ -25,7 +25,9 @@ export class MapaComponent implements OnInit {
   latLobo: number;
   lngLobo: number;
   
-/*
+  //Para los botones de enseñar y esconder
+  valor_cobertura: boolean;
+
 /*
 Gateway001: 42,170026 -8,688612
 Gateway002: 42,170097 -8,688528
@@ -78,7 +80,7 @@ Gateway004: 42,169826 -8,688358
 
     let body;
     let lobos;
-    
+    this.valor_cobertura = true;
 
     this.registerService.register(body, "http://localhost:9000/users/coordenadasLobo").subscribe(data => {
       lobos = data.msg;
@@ -111,6 +113,17 @@ Gateway004: 42,169826 -8,688358
     });
 
   }
+
+  cobertura(){
+    if(this.valor_cobertura==true){
+      this.valor_cobertura=false;
+    }else{
+      this.valor_cobertura=true;
+    }
+
+    console.log("Cobertura: ", this.valor_cobertura);
+  }
+
 
 }
 

@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
       
     })
 
-    // console.log("RSSI: ", this.RSSI);
+    
 
   }
 
@@ -81,10 +81,7 @@ export class DashboardComponent implements OnInit {
       this.tablas = true;
     }
     console.log("Variable tablas: ", this.tablas);
+    this.timestamp.sort((a,b) =>  a < b ? 1 : a > b ? -1 : 0);
   }
-
-
-  
-
 
 }
